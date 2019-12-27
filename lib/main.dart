@@ -28,8 +28,7 @@ class MyApp extends StatelessWidget {
         platform: TargetPlatform.iOS,
       ),
       home: MyHomePage(
-          title: '信息发布',
-          channel: IOWebSocketChannel.connect(Api.SOCKET_URL)),
+          title: '信息发布', channel: IOWebSocketChannel.connect(Api.SOCKET_URL)),
     );
   }
 }
@@ -214,8 +213,7 @@ class _MyHomePageState extends State<MyHomePage>
 
   onDone() {
     debugPrint("Socket is closed");
-    widget.channel =
-        IOWebSocketChannel.connect(Api.SOCKET_URL);
+    widget.channel = IOWebSocketChannel.connect(Api.SOCKET_URL);
     this._getMessage();
   }
 
