@@ -13,9 +13,9 @@ import 'package:web_socket_channel/io.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
 import 'dart:async';
-import 'api.dart';
 import 'model/loopimage.dart';
-import 'http.dart';
+import 'http/api.dart';
+import 'http/http.dart';
 
 void main() => runApp(MyApp());
 

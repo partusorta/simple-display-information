@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:convert';
+import 'dart:async';
 import 'model/loopimage.dart';
 import 'model/department.dart';
-import 'api.dart';
-import 'dart:async';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'http.dart';
+import 'http/api.dart';
+import 'http/http.dart';
+
+
 
 class DepInfoPage extends StatefulWidget {
   final Loopimage loopimage;
