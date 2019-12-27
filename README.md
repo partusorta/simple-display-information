@@ -1,6 +1,20 @@
-# release_news
+##profile
 
-A new Flutter project.
+A simple Flutter project for displaying some information on android device.
+It contains simple row and column layouts, display pictures, 
+use websockets to change content on homepage, 
+and adapt screen width and font size of different devices, 
+and contains 60 seconds countdown on function page, 
+use the simple encapsulation of 'dio' network requests, contains animation of loading,
+use the local storage.
+
+dependencies:
+  flutter_swiper : ^1.1.3
+  dio: ^3.0.6
+  flutter_screenutil: ^0.7.0
+  web_socket_channel: ^1.1.0
+  shared_preferences: ^0.5.6
+  flutter_spinkit: ^4.1.1+1
 
 ## Getting Started
 
