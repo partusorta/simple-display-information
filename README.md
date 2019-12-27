@@ -21,6 +21,8 @@ dependencies:
   shared_preferences: ^0.5.6
   
   flutter_spinkit: ^4.1.1+1
+  
+  https://github.com/partusorta/simple-display-information/blob/master/lib/resource/images/IMG_4192.PNG
 
 ## Getting Started
 
