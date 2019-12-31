@@ -23,7 +23,7 @@ class LocationPageState extends State<LocationPage> {
   List imageData;
   List locationData;
   List select = [1, 0, 0, 0, 0];
-  List select6 = [1, 0, 0, 0, 0];
+  List select6 = [1, 0, 0, 0, 0, 0];
   List secSelect;
   var more = 0; //默认展开，不添加按钮
   var isUpButton = 0;
@@ -296,7 +296,7 @@ class LocationPageState extends State<LocationPage> {
               postLocation('就诊科室');
               setState(() {
                 select = [1, 0, 0, 0, 0];
-                select6 = [1, 0, 0, 0, 0];
+                select6 = [1, 0, 0, 0, 0, 0];
               });
             },
             child: ClipRRect(
@@ -319,7 +319,7 @@ class LocationPageState extends State<LocationPage> {
               postLocation('检查科室');
               setState(() {
                 select = [0, 1, 0, 0, 0];
-                select6 = [1, 0, 0, 0, 0];
+                select6 = [1, 0, 0, 0, 0, 0];
               });
             },
             child: ClipRRect(
@@ -342,7 +342,7 @@ class LocationPageState extends State<LocationPage> {
               postLocation('病区住院');
               setState(() {
                 select = [0, 0, 1, 0, 0];
-                select6 = [1, 0, 0, 0, 0];
+                select6 = [1, 0, 0, 0, 0, 0];
               });
             },
             child: ClipRRect(
@@ -367,7 +367,7 @@ class LocationPageState extends State<LocationPage> {
               postLocation('楼层信息');
               setState(() {
                 select = [0, 0, 0, 1, 0];
-                select6 = [1, 0, 0, 0, 0];
+                select6 = [1, 0, 0, 0, 0, 0];
               });
             },
             child: ClipRRect(
@@ -390,7 +390,7 @@ class LocationPageState extends State<LocationPage> {
               postLocation('辅助设施');
               setState(() {
                 select = [0, 0, 0, 0, 1];
-                select6 = [1, 0, 0, 0, 0];
+                select6 = [1, 0, 0, 0, 0, 0];
               });
             },
             child: ClipRRect(
@@ -427,7 +427,7 @@ class LocationPageState extends State<LocationPage> {
                 onTap: () {
                   setState(() {
                     this.index = 0;
-                    this.select6 = [1, 0, 0, 0, 0];
+                    this.select6 = [1, 0, 0, 0, 0, 0];
                   });
                 },
                 child: Container(
@@ -446,7 +446,7 @@ class LocationPageState extends State<LocationPage> {
                 onTap: () {
                   setState(() {
                     this.index = 1;
-                    this.select6 = [0, 1, 0, 0, 0];
+                    this.select6 = [0, 1, 0, 0, 0, 0];
                   });
                 },
                 child: Container(
@@ -465,7 +465,7 @@ class LocationPageState extends State<LocationPage> {
                 onTap: () {
                   setState(() {
                     this.index = 2;
-                    this.select6 = [0, 0, 1, 0, 0];
+                    this.select6 = [0, 0, 1, 0, 0, 0];
                   });
                 },
                 child: Container(
@@ -484,7 +484,7 @@ class LocationPageState extends State<LocationPage> {
                 onTap: () {
                   setState(() {
                     this.index = 3;
-                    this.select6 = [0, 0, 0, 1, 0];
+                    this.select6 = [0, 0, 0, 1, 0, 0];
                   });
                 },
                 child: Container(
@@ -503,7 +503,7 @@ class LocationPageState extends State<LocationPage> {
                 onTap: () {
                   setState(() {
                     this.index = 4;
-                    this.select6 = [0, 0, 0, 0, 1];
+                    this.select6 = [0, 0, 0, 0, 1, 0];
                   });
                 },
                 child: Container(
@@ -520,16 +520,28 @@ class LocationPageState extends State<LocationPage> {
                 )),
             GestureDetector(
               onTap: () {
-                setState(() {
-                  this.more = 1; //状态为展开，提前已经添加了按钮
-                });
+                var secSelectList = [];
+                if (this.locationData != null) {
+                  for (var i = 0; i < this.locationData.length; i++) {
+                    if (i == 0) {
+                      secSelectList.add(1);
+                    } else {
+                      secSelectList.add(0);
+                    }
+                  }
+                  setState(() {
+                    this.more = 1; //状态为展开，提前已经添加了按钮
+                    this.index = 0;
+                    this.secSelect = secSelectList;
+                  });
+                }
               },
               child: Container(
                 alignment: Alignment(0, 0),
                 width: width * 0.15,
                 height: width * 0.07,
                 // color: Color(0xFFEAEAEA),
-                child: Text('其他门诊',
+                child: Text('其他位置',
                     style: TextStyle(
                         color: Color(0xff32D392),
                         fontSize: ScreenUtil.getInstance().setSp(28))),
@@ -573,6 +585,8 @@ class LocationPageState extends State<LocationPage> {
             if (this.isUpButton == 1 && i == number - 1) {
               setState(() {
                 this.more = 0; //状态为收起
+                this.index = 0;
+                this.select6 = [1, 0, 0, 0, 0, 0];
               });
             } else {
               setState(() {

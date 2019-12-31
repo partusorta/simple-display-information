@@ -1,5 +1,5 @@
 class Api{
-  static const String BASE_URL = 'http://192.168.7.71:10088/';
+  static const String BASE_URL = 'http://192.168.7.7:10088/';
 
   static const String SOCKET_URL = 'ws://192.168.7.7:10088/machineSocket';
 
