@@ -16,6 +16,8 @@ import 'dart:async';
 import 'model/loopimage.dart';
 import 'http/api.dart';
 import 'http/http.dart';
+import 'dart:io';
+import 'package:flutter/services.dart';
 
 void main() => runApp(MyApp());
 
@@ -47,22 +49,44 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   List imageData;
   var imageType; //轮播图类型1主推，2常规
   var isVisible = false; //悬浮按钮是否可见
 
-  var error;
+  var error = 1;
 
   var countdownTime = 60;
   Timer timer;
 
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    
     postImageType();
     _getMessage();
+    setBarStatus(true);
   }
 
+
+
+   static setBarStatus(bool isDarkIcon, {Color color: Colors.transparent}) async{
+
+    if (Platform.isAndroid) {
+      SystemChrome.setEnabledSystemUIOverlays([]);
+      // if (isDarkIcon) {
+      //   SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
+      //       statusBarColor: color, statusBarIconBrightness: Brightness.dark);
+      //   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+      // } else {
+      //   SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
+      //       statusBarColor: color, statusBarIconBrightness: Brightness.light);
+      //   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
+      // }
+    }
+  }
+
+  
   void startCountdownTimer() {
     const oneSec = const Duration(seconds: 1);
     setState(() {
@@ -243,11 +267,13 @@ class _MyHomePageState extends State<MyHomePage>
   }
 
   setStorage(value) async {
+    SharedPreferences.setMockInitialValues({});
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('isCountdown', value);
   }
 
   getStorage() async {
+    SharedPreferences.setMockInitialValues({});
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var isCountdown = prefs.getString('isCountdown');
     if (isCountdown == '1') {
@@ -301,7 +327,8 @@ class _MyHomePageState extends State<MyHomePage>
     //没有网络
     if (this.error == 1) {
       return Container(
-          child: GestureDetector(
+        child:
+          GestureDetector(
               onTap: () {
                 postImageType();
               },
@@ -322,8 +349,36 @@ class _MyHomePageState extends State<MyHomePage>
                             color: Color(0xff454545))),
                   ],
                 ),
-              ))));
-    } else {
+              ))
+          
+              ));
+    } 
+    else if (this.error == 2) {
+      return Container(
+        child:new AlertDialog(
+        title: new Text('设备号'),
+        content: new SingleChildScrollView(
+          child: new ListBody(
+            children: <Widget>[
+              new Text('请输入操作码'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          // new FlatButton(
+          //   child: new Text(this.isplay.toString()),
+          //   onPressed: () {
+          //     setState(() {
+          //       type = 1;
+          //     });
+          //     getDisplaylist();
+          //   },
+          // ),
+        ],
+      )
+      );
+    }
+    else {
       if (this.imageType == 2 && this.imageData != null) {
         return Container(
             child: Column(children: <Widget>[
@@ -668,8 +723,29 @@ class _MyHomePageState extends State<MyHomePage>
     this.timer.cancel();
     this.countdownTime = null;
     widget.channel.sink.close();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+
+    if (state == AppLifecycleState.paused) {
+      setState(() {
+        error = 2;
+      });
+      print('!!!!!!!!!!!!!');
+      
+    } else if (state == AppLifecycleState.resumed) {
+      print('!!!!!!!!!!!!!qqqqq');
+    }
+    else if (state == AppLifecycleState.inactive) {
+       setState(() {
+        error = 2;
+      });
+    }
+  }
+
 }
 
 class Socket {

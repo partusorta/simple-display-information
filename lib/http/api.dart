@@ -3,7 +3,7 @@ class Api{
 
   static const String SOCKET_URL = 'ws://192.168.7.7:10088/machineSocket';
 
-  static const String LOOPIMAGE = BASE_URL+'loopimage/selectloopimage';//轮播图
+  static const String LOOPIMAGE = BASE_URL+'app/loopimage/selectloopimage';//轮播图
 
   static const String HOSPITAL_INFO = BASE_URL+'app/hospital/selecthospitalinfo';//医院介绍
   
@@ -19,5 +19,5 @@ class Api{
 
   static const String DOCTOR_DETAIL = BASE_URL+'app/doctor/selectdoctorInfo';//医生详情
 
-  static const String LOOPIMAGE_TYPE = BASE_URL+'loopimage/getLoopImageState';//查主推轮播图状态 1启用 2停用
+  static const String LOOPIMAGE_TYPE = BASE_URL+'app/loopimage/getLoopImageState';//查主推轮播图状态 1启用 2停用
 }
